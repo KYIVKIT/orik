@@ -1,1 +1,50 @@
-<!-- index admin HTML с ползунками и загрузкой/saving tattoo-settings.json -->
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Админка — Татуировки</title>
+  <style>
+    body { background: #111; color: #fff; font-family: sans-serif; text-align: center; padding: 20px; }
+    .mask-frame { position: relative; width: 384px; height: 384px; margin: 0 auto 20px; }
+    .mask-frame img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; }
+    .controls, .sliders { margin: 10px auto; width: 300px; text-align: left; }
+    .controls button { margin: 5px; padding: 5px 10px; }
+    .sliders label { display: block; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Админка — Татуировки</h1>
+  <div class="mask-frame">
+    <img id="baseMask" src="../mask/1.png" alt="Маска">
+    <img id="tattoo" src="../tattoo/1.png" alt="Татуировка">
+  </div>
+
+  <div class="controls">
+    <button onclick="changeTattoo(-1)">← Предыдущая</button>
+    <span id="tattooLabel">Тату 1</span>
+    <button onclick="changeTattoo(1)">Следующая →</button>
+  </div>
+
+  <div class="sliders">
+    <label>X: <input type="range" id="xSlider" min="-200" max="200" value="0"></label>
+    <label>Y: <input type="range" id="ySlider" min="-200" max="200" value="0"></label>
+    <label>Scale: <input type="range" id="scaleSlider" min="0.1" max="2" step="0.01" value="1"></label>
+    <label>Цвет:
+      <select id="colorSelect">
+        <option value="white">Белый</option>
+        <option value="red">Красный</option>
+        <option value="green">Зелёный</option>
+        <option value="blue">Синий</option>
+        <option value="yellow">Жёлтый</option>
+        <option value="black">Чёрный</option>
+        <option value="cyan">Голубой</option>
+      </select>
+    </label>
+  </div>
+
+  <button onclick="saveSettings()">💾 Сохранить tattoo-settings.json</button>
+
+  <script src="app.js"></script>
+</body>
+</html>
