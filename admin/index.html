@@ -2,87 +2,11 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Кастомизация, версия 1.2 (Admin Panel)</title>
-  <style>
-    body { background: #111; color: #fff; font-family: sans-serif; text-align: center; padding: 20px; }
-    .version { font-size: 14px; margin-bottom: 10px; color: #888; }
-    .mask-frame { position: relative; width: 384px; height: 384px; margin: 20px auto; overflow: hidden; border: 1px solid #444; }
-    .mask-frame img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; user-select: none; }
-    #tattoo, #scar { object-fit: contain; }
-    .controls { display: flex; justify-content: center; gap: 10px; margin: 10px 0; }
-    .arrow { cursor: pointer; font-size: 24px; user-select: none; }
-    .slider-group { margin: 15px 0; text-align: left; display: inline-block; }
-    .slider-group label { display: inline-block; width: 100px; text-align: right; margin-right: 10px; }
-    .slider-group input { width: 200px; }
-    .save-button { margin-top: 5px; padding: 5px 10px; cursor: pointer; background: #444; color: #fff; border: none; border-radius: 3px; }
-    h2 { margin: 5px 0; font-size: 18px; }
-  </style>
+  <title>Админ-панель | Версия 0.010</title>
 </head>
 <body>
-  <div class="version">Кастомизация, версия 1.2 (Admin Panel)</div>
-  <h1>Кастомизация маски</h1>
-  <div class="mask-frame">
-    <img id="baseMask" src="mask/1" alt="Маска">
-    <img id="tattoo" src="tattoo/1" alt="Татуировка" style="left:55%; top:35%; width:40%;">
-     alt="Шрам" style="left:30%; top:45%; width:30%;">
-  </div>
-
-  <div class="controls">
-    <span class="arrow" onclick="change('mask', -1)">←</span><span>Фактура</span><span class="arrow" onclick="change('mask', 1)">→</span>
-  </div>
-  <div class="controls">
-    <span class="arrow" onclick="change('tattoo', -1)">←</span><span>Татуировка</span><span class="arrow" onclick="change('tattoo', 1)">→</span>
-  </div>
-  
-
-  <div class="slider-group">
-    <h2>Настройка татуировки</h2>
-    <label for="tattoo-x">Горизонталь:</label><input id="tattoo-x" type="range" min="0" max="100" value="55"><br>
-    <label for="tattoo-y">Вертикаль:</label><input id="tattoo-y" type="range" min="0" max="100" value="35"><br>
-    <label for="tattoo-scale">Масштаб:</label><input id="tattoo-scale" type="range" min="10" max="200" value="40"><br>
-    <button class="save-button" id="save-tattoo">Сохранить тату</button>
-  </div>
-
-  <div class="slider-group">
-    <h2>Настройка шрама</h2>
-    <label for="scar-x">Горизонталь:</label><input id="scar-x" type="range" min="0" max="100" value="30"><br>
-    <label for="scar-y">Вертикаль:</label><input id="scar-y" type="range" min="0" max="100" value="45"><br>
-    <label for="scar-scale">Масштаб:</label><input id="scar-scale" type="range" min="10" max="200" value="30"><br>
-    <button class="save-button" id="save-scar">Сохранить шрам</button>
-  
-  <div class="slider-group">
-    <h2>Цвет татуировки</h2>
-    <label for="tattoo-color">Цвет:</label>
-    <select id="tattoo-color">
-      <option value="white">Белый</option>
-      <option value="black">Чёрный</option>
-      <option value="red">Красный</option>
-      <option value="blue">Синий</option>
-      <option value="green">Зелёный</option>
-      <option value="yellow">Жёлтый</option>
-      <option value="purple">Фиолетовый</option>
-    </select>
-  </div>
-
+  <h1>Админка</h1>
+  <p>Редактирование масок и татуировок</p>
   <script src="app.js"></script>
-
-  <div style="margin-top: 30px;">
-    <button onclick="exportConfig()" style="background:#444; color:#fff; border:none; padding:8px 16px; cursor:pointer;">
-      💾 Экспорт настроек татуировок
-    </button>
-  </div>
-  <script>
-    function exportConfig() {
-      const output = JSON.stringify(savedPositions.tattoo, null, 2);
-      const blob = new Blob([output], {{ type: 'application/json' }});
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'tattoo_config.json';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  </script>
 </body>
 </html>
