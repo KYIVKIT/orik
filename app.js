@@ -1,24 +1,34 @@
 
-let state = {
-  mask: 1,
-  tattoo: 1,
-  maxMask: 8,
-  maxTattoo: 9
-};
+let maskIndex = 1;
+let tattooIndex = 1;
+const maxMasks = 8;
+const maxTattoos = 9;
 
-function change(type, direction) {
-  state[type] += direction;
+function updateImages() {
+  document.getElementById("mask").src = `mask/${maskIndex}.png`;
+  document.getElementById("tattoo").src = `tattoo/${tattooIndex}.png`;
+}
 
-  if (state[type] > state["max" + capitalize(type)]) {
-    state[type] = 1;
-  } else if (state[type] < 1) {
-    state[type] = state["max" + capitalize(type)];
+function change(type, delta) {
+  if (type === "mask") {
+    maskIndex = (maskIndex + delta - 1 + maxMasks) % maxMasks + 1;
+  } else if (type === "tattoo") {
+    tattooIndex = (tattooIndex + delta - 1 + maxTattoos) % maxTattoos + 1;
   }
-
-  document.getElementById(type === "mask" ? "baseMask" : "tattoo").src =
-    type + "/" + state[type] + ".png";
+  updateImages();
 }
 
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
+fetch("tattoo-settings.json")
+  .then((res) => res.json())
+  .then((settings) => {
+    const tattoo = document.getElementById("tattoo");
+    const s = settings[tattooIndex];
+    if (s) {
+      tattoo.style.left = s.x + "px";
+      tattoo.style.top = s.y + "px";
+      tattoo.style.transform = `scale(${s.scale})`;
+      tattoo.style.filter = `brightness(${s.color === "white" ? 100 : 0}%)`;
+    }
+  });
+
+document.addEventListener("DOMContentLoaded", updateImages);
