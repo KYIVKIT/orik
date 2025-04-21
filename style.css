@@ -1,61 +1,57 @@
 
 body {
-    margin: 0;
     background: #111;
-    font-family: sans-serif;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     height: 100vh;
-    overflow: hidden;
+    margin: 0;
 }
-
-.container {
+.mask-container {
     position: relative;
-    width: 500px;
-    height: 600px;
-    border: 2px solid #444;
+    width: 512px;
+    height: 512px;
     overflow: hidden;
+    border-radius: 12px;
+    border: 2px solid #333;
 }
-
-canvas#canvas-bg {
+#bg-canvas {
     position: absolute;
+    top: 0; left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
-    background: radial-gradient(circle, #222, #000);
-}
-
-.mask-wrapper {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     z-index: 1;
 }
-
-.mask-wrapper img {
-    width: 80%;
-    transition: transform 0.8s ease-in-out;
+#mask, #mask-smile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 2;
+    transition: opacity 0.8s ease;
 }
-
-.mask-wrapper img:hover {
-    transform: translate(5px, -5px) rotateZ(1.5deg);
+#mask-smile {
+    opacity: 0;
 }
-
-.buttons {
+.mask-container:hover #mask-smile {
+    opacity: 1;
+}
+.mask-container:hover #mask {
+    opacity: 0;
+}
+.selector {
     position: absolute;
     bottom: 10px;
-    width: 100%;
-    text-align: center;
-    z-index: 2;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
 }
-
-.buttons button {
+.selector button {
+    background: #222;
+    color: white;
+    border: 1px solid #444;
     margin: 0 5px;
     padding: 5px 10px;
-    font-size: 16px;
     cursor: pointer;
 }
