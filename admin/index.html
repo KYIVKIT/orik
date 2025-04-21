@@ -2,11 +2,37 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Админ-панель | Версия 0.010</title>
+  <title>Админ-панель — версия 0.005</title>
+  <style>
+    body { background: #000; color: #0f0; font-family: monospace; text-align: center; padding: 20px; }
+    .mask-frame { position: relative; width: 384px; height: 384px; margin: 20px auto; }
+    .mask-frame img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; }
+    .controls, .sliders { margin: 10px auto; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    input[type=range] { width: 100px; }
+    .sliders label { display: flex; flex-direction: column; align-items: center; color: white; }
+  </style>
 </head>
 <body>
-  <h1>Админка</h1>
-  <p>Редактирование масок и татуировок</p>
+  <h1>Админ-панель татуировок</h1>
+  <div class="mask-frame">
+    <img id="baseMask" src="../mask/1.png" alt="Маска">
+    <img id="tattoo" src="../tattoo/1.png" alt="Татуировка">
+  </div>
+  <div class="controls">
+    <span class="arrow" onclick="change('mask', -1)">←</span>
+    <span>Маска</span>
+    <span class="arrow" onclick="change('mask', +1)">→</span>
+  </div>
+  <div class="controls">
+    <span class="arrow" onclick="change('tattoo', -1)">←</span>
+    <span>Тату</span>
+    <span class="arrow" onclick="change('tattoo', +1)">→</span>
+  </div>
+  <div class="sliders">
+    <label>X<input id="posX" type="range" min="-200" max="200" value="0" oninput="updateTransform()"></label>
+    <label>Y<input id="posY" type="range" min="-200" max="200" value="0" oninput="updateTransform()"></label>
+    <label>Scale<input id="scale" type="range" min="0.1" max="2" step="0.1" value="1" oninput="updateTransform()"></label>
+  </div>
   <script src="app.js"></script>
 </body>
 </html>
