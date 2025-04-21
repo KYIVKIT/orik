@@ -1,34 +1,43 @@
 
-let maskIndex = 1;
-let tattooIndex = 1;
-const maxMasks = 8;
-const maxTattoos = 9;
+let current = { mask: 1, tattoo: 1 };
+let total = { mask: 8, tattoo: 9 };
+let tattooPositions = {};
 
-function updateImages() {
-  document.getElementById("mask").src = `mask/${maskIndex}.png`;
-  document.getElementById("tattoo").src = `tattoo/${tattooIndex}.png`;
+async function loadTattooSettings() {
+  try {
+    const res = await fetch("tattoo-settings.json");
+    tattooPositions = await res.json();
+  } catch {
+    tattooPositions = {};
+  }
 }
 
 function change(type, delta) {
-  if (type === "mask") {
-    maskIndex = (maskIndex + delta - 1 + maxMasks) % maxMasks + 1;
-  } else if (type === "tattoo") {
-    tattooIndex = (tattooIndex + delta - 1 + maxTattoos) % maxTattoos + 1;
-  }
-  updateImages();
+  current[type] += delta;
+  const max = total[type];
+  if (current[type] > max) current[type] = 1;
+  if (current[type] < 1) current[type] = max;
+
+  const el = document.getElementById(type === "mask" ? "baseMask" : "tattoo");
+  el.src = `${type}/${current[type]}.png`;
+
+  if (type === "tattoo") applyTattooSettings();
 }
 
-fetch("tattoo-settings.json")
-  .then((res) => res.json())
-  .then((settings) => {
-    const tattoo = document.getElementById("tattoo");
-    const s = settings[tattooIndex];
-    if (s) {
-      tattoo.style.left = s.x + "px";
-      tattoo.style.top = s.y + "px";
-      tattoo.style.transform = `scale(${s.scale})`;
-      tattoo.style.filter = `brightness(${s.color === "white" ? 100 : 0}%)`;
-    }
-  });
+function applyTattooSettings() {
+  const id = current.tattoo;
+  const el = document.getElementById("tattoo");
+  const set = tattooPositions[id];
+  if (!el || !set) return;
 
-document.addEventListener("DOMContentLoaded", updateImages);
+  el.style.position = "absolute";
+  el.style.left = (set.x || 0) + "px";
+  el.style.top = (set.y || 0) + "px";
+  el.style.width = (set.size || 100) + "%";
+  el.style.filter = set.color ? `hue-rotate(${set.color}deg)` : "none";
+}
+
+window.onload = async () => {
+  await loadTattooSettings();
+  applyTattooSettings();
+};

@@ -1,35 +1,35 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>ORIK MASK CUSTOMIZER</title>
+  <title>Кастомизация — версия 0.0.9</title>
   <style>
-    body { background: #111; color: #fff; font-family: sans-serif; text-align: center; padding: 40px; }
-    .frame { position: relative; width: 384px; height: 384px; margin: auto; }
-    .frame img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-    .controls { margin-top: 20px; }
-    .arrow { cursor: pointer; padding: 10px; font-size: 18px; }
+    body { background: #111; color: #fff; font-family: sans-serif; text-align: center; padding: 30px; }
+    .mask-frame { position: relative; width: 384px; height: 384px; margin: 0 auto 20px; }
+    .mask-frame img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; }
+    .controls { display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .arrow { cursor: pointer; font-size: 24px; user-select: none; }
+    h1 { font-size: 28px; margin-bottom: 20px; }
   </style>
 </head>
 <body>
-  <h1>Кастомизация маски v0.09</h1>
-  <div class="frame">
-    <img id="mask" src="mask/1.png" alt="Маска">
+  <h1>Кастомизация — версия 0.0.9</h1>
+  <div class="mask-frame">
+    <img id="baseMask" src="mask/1.png" alt="Маска">
     <img id="tattoo" src="tattoo/1.png" alt="Татуировка">
   </div>
+
   <div class="controls">
-    <div>
-      <span class="arrow" onclick="change('mask', -1)">←</span>
-      Маска
-      <span class="arrow" onclick="change('mask', 1)">→</span>
-    </div>
-    <div style="margin-top: 10px;">
-      <span class="arrow" onclick="change('tattoo', -1)">←</span>
-      Татуировка
-      <span class="arrow" onclick="change('tattoo', 1)">→</span>
-    </div>
+    <span class="arrow" onclick="change('mask', -1)">←</span>
+    <span>Маска</span>
+    <span class="arrow" onclick="change('mask', 1)">→</span>
   </div>
+  <div class="controls">
+    <span class="arrow" onclick="change('tattoo', -1)">←</span>
+    <span>Татуировка</span>
+    <span class="arrow" onclick="change('tattoo', 1)">→</span>
+  </div>
+
   <script src="app.js"></script>
 </body>
 </html>
