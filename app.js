@@ -1,1 +1,1 @@
-// app.js for root
+// app.js
