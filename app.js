@@ -1,40 +1,15 @@
-let maskIndex = 1;
-let tattooIndex = 1;
-const maxMasks = 8;
-const maxTattoos = 9;
-let tattooSettings = {};
 
-fetch('tattoo-settings.json')
-  .then(res => res.json())
-  .then(data => {
-    tattooSettings = data;
-    update();
-  });
+let state = {
+  mask: 1,
+  tattoo: 1,
+  maxMask: 8,
+  maxTattoo: 9,
+};
 
-function update() {
-  document.getElementById('baseMask').src = `mask/${maskIndex}.png`;
-  document.getElementById('tattoo').src = `tattoo/${tattooIndex}.png`;
-
-  const tattoo = document.getElementById('tattoo');
-  const settings = tattooSettings[tattooIndex];
-  if (settings) {
-    tattoo.style.left = settings.x + '%';
-    tattoo.style.top = settings.y + '%';
-    tattoo.style.width = settings.size + '%';
-    tattoo.style.filter = `hue-rotate(${settings.color}deg)`;
-    tattoo.style.position = 'absolute';
-  }
-}
-
-function change(type, delta) {
-  if (type === 'mask') {
-    maskIndex += delta;
-    if (maskIndex < 1) maskIndex = maxMasks;
-    if (maskIndex > maxMasks) maskIndex = 1;
-  } else if (type === 'tattoo') {
-    tattooIndex += delta;
-    if (tattooIndex < 1) tattooIndex = maxTattoos;
-    if (tattooIndex > maxTattoos) tattooIndex = 1;
-  }
-  update();
+function change(type, dir) {
+  state[type] += dir;
+  const max = state[type === "mask" ? "maxMask" : "maxTattoo"];
+  if (state[type] > max) state[type] = 1;
+  if (state[type] < 1) state[type] = max;
+  document.getElementById(type === "mask" ? "baseMask" : "tattoo").src = type + "/" + state[type] + ".png";
 }
