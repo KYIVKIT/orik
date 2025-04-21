@@ -3,17 +3,18 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>ORIK MASK — v0.010</title>
+  <title>Маска — Кастомизация</title>
   <style>
     body { background: #111; color: #fff; font-family: sans-serif; text-align: center; padding: 40px; }
     .mask-frame { position: relative; width: 384px; height: 384px; margin: 0 auto 20px; }
     .mask-frame img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; }
     .controls { display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 12px; }
     .arrow { cursor: pointer; font-size: 24px; user-select: none; }
+    .admin-link { margin-top: 20px; display: inline-block; padding: 10px 20px; background: #444; color: #fff; text-decoration: none; border-radius: 5px; }
   </style>
 </head>
 <body>
-  <h1>Маска</h1>
+  <h1>Кастомизация — Версия 0.009</h1>
   <div class="mask-frame">
     <img id="baseMask" src="mask/1.png" alt="Маска">
     <img id="tattoo"   src="tattoo/1.png" alt="Татуировка">
@@ -21,7 +22,7 @@
 
   <div class="controls">
     <span class="arrow" onclick="change('mask', -1)">←</span>
-    <span>Фактура</span>
+    <span>Маска</span>
     <span class="arrow" onclick="change('mask', +1)">→</span>
   </div>
   <div class="controls">
@@ -30,6 +31,7 @@
     <span class="arrow" onclick="change('tattoo', +1)">→</span>
   </div>
 
+  <a href="admin/index.html" class="admin-link">Админ Панель</a>
   <script src="app.js"></script>
 </body>
 </html>
