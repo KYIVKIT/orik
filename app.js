@@ -1,38 +1,41 @@
-let maskIndex = 1;
-let tattooIndex = 1;
+
+let currentMaskIndex = 0;
+let currentTattooIndex = 0;
+const totalMaskCount = 8;
+const totalTattooCount = 9;
+
 let tattooSettings = {};
 
-function loadSettings() {
-  fetch('tattoo-settings.json')
-    .then(res => res.json())
-    .then(data => {
-      tattooSettings = data;
-      updateDisplay();
-    });
-}
+fetch("tattoo-settings.json")
+  .then(res => res.json())
+  .then(data => {
+    tattooSettings = data;
+    applyTattooPosition(currentTattooIndex + 1);
+  });
 
-function change(type, delta) {
-  if (type === 'mask') {
-    maskIndex += delta;
-    if (maskIndex < 1) maskIndex = 1;
-    if (maskIndex > 9) maskIndex = 9;
-    document.getElementById('baseMask').src = `mask/${maskIndex}.png`;
-  } else if (type === 'tattoo') {
-    tattooIndex += delta;
-    if (tattooIndex < 1) tattooIndex = 1;
-    if (tattooIndex > 9) tattooIndex = 9;
-    updateDisplay();
+function change(type, dir) {
+  if (type === "mask") {
+    currentMaskIndex = (currentMaskIndex + dir + totalMaskCount) % totalMaskCount;
+    document.getElementById("baseMask").src = `mask/${currentMaskIndex + 1}.png`;
+  } else if (type === "tattoo") {
+    currentTattooIndex = (currentTattooIndex + dir + totalTattooCount) % totalTattooCount;
+    document.getElementById("tattoo").src = `tattoo/${currentTattooIndex + 1}.png`;
+    applyTattooPosition(currentTattooIndex + 1);
   }
 }
 
-function updateDisplay() {
-  const tattooImg = document.getElementById('tattoo');
-  tattooImg.src = `tattoo/${tattooIndex}.png`;
-  const s = tattooSettings[tattooIndex];
-  if (s) {
-    tattooImg.style.transform = `translate(${s.x}px, ${s.y}px) scale(${s.scale})`;
-    tattooImg.style.filter = s.color === 'black' ? 'brightness(0)' : s.color === 'white' ? 'brightness(10)' : '';
-  }
-}
+function applyTattooPosition(index) {
+  const tattoo = document.getElementById("tattoo");
+  const settings = tattooSettings[index];
 
-window.onload = loadSettings;
+  if (!tattoo || !settings) {
+    console.warn("Нет настроек для татуировки", index);
+    return;
+  }
+
+  tattoo.style.position = "absolute";
+  tattoo.style.left = settings.left + "px";
+  tattoo.style.top = settings.top + "px";
+  tattoo.style.transform = `scale(${settings.scale})`;
+  tattoo.style.filter = `hue-rotate(${settings.color}deg)`;
+}
