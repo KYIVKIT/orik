@@ -1,27 +1,60 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Orik Mask Smile Transition</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Кастомизация Маски</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    #container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #canvasBox {
+      width: 90vw;
+      height: 60vh;
+      background: radial-gradient(ellipse at center, #222 0%, #000 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #maskImage {
+      position: absolute;
+      max-height: 80%;
+      transition: transform 0.5s ease;
+    }
+    #sliderContainer {
+      margin-top: 20px;
+    }
+    input[type=range] {
+      width: 300px;
+    }
+  </style>
 </head>
 <body>
-    <div class="mask-container">
-        <canvas id="bg-canvas"></canvas>
-        <img id="mask" src="mask/1.png" alt="mask">
-        <img id="mask-smile" src="mask/smile.png" alt="mask smile">
-        <div class="selector">
-            <button onclick="changeMask(1)">1</button>
-            <button onclick="changeMask(2)">2</button>
-            <button onclick="changeMask(3)">3</button>
-            <button onclick="changeMask(4)">4</button>
-            <button onclick="changeMask(5)">5</button>
-            <button onclick="changeMask(6)">6</button>
-            <button onclick="changeMask(7)">7</button>
-            <button onclick="changeMask(8)">8</button>
-        </div>
+  <div id="container">
+    <div id="canvasBox">
+      <img id="maskImage" src="mask/1.png" alt="Маска">
     </div>
-    <script src="app.js"></script>
+    <div id="sliderContainer">
+      <label for="maskSlider">Маска: </label>
+      <input type="range" id="maskSlider" min="1" max="8" value="1">
+      <span id="maskLabel">1 / 8</span>
+    </div>
+  </div>
+  <script src="app.js"></script>
 </body>
 </html>
