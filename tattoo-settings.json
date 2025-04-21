@@ -1,56 +1,56 @@
 {
   "1": {
-    "x": 50,
-    "y": 50,
-    "scale": 1.0,
-    "color": "default"
+    "x": -47,
+    "y": -21,
+    "scale": 0.3,
+    "color": "black"
   },
   "2": {
-    "x": 50,
-    "y": 50,
-    "scale": 1.0,
-    "color": "default"
+    "x": -43,
+    "y": 41,
+    "scale": 0.23,
+    "color": "white"
   },
   "3": {
-    "x": 50,
-    "y": 50,
-    "scale": 1.0,
-    "color": "default"
+    "x": 30,
+    "y": -73,
+    "scale": 0.22,
+    "color": "white"
   },
   "4": {
-    "x": 50,
-    "y": 50,
-    "scale": 1.0,
-    "color": "default"
+    "x": -52,
+    "y": -4,
+    "scale": 0.43,
+    "color": "white"
   },
   "5": {
-    "x": 50,
-    "y": 50,
-    "scale": 1.0,
-    "color": "default"
+    "x": 30,
+    "y": -16,
+    "scale": 0.47,
+    "color": "white"
   },
   "6": {
-    "x": 50,
-    "y": 50,
-    "scale": 1.0,
-    "color": "default"
+    "x": -83,
+    "y": -2,
+    "scale": 0.13,
+    "color": "white"
   },
   "7": {
-    "x": 50,
-    "y": 50,
-    "scale": 1.0,
-    "color": "default"
+    "x": 73,
+    "y": 0,
+    "scale": 0.14,
+    "color": "white"
   },
   "8": {
-    "x": 50,
-    "y": 50,
-    "scale": 1.0,
-    "color": "default"
+    "x": 14,
+    "y": -77,
+    "scale": 0.29,
+    "color": "white"
   },
   "9": {
-    "x": 50,
-    "y": 50,
-    "scale": 1.0,
-    "color": "default"
+    "x": 30,
+    "y": 10,
+    "scale": 0.16,
+    "color": "white"
   }
 }
