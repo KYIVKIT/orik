@@ -1,1 +1,11 @@
+/admin/
+  index.html
+  app.js
+/public/
+  index.html
+  app.js
+/mask/
+  1.png, 2.png, ...
+/tattoo/
+/scarce/
 
