@@ -1,43 +1,41 @@
 
-let current = { mask: 1, tattoo: 1 };
-let total = { mask: 8, tattoo: 9 };
-let tattooPositions = {};
+let currentMaskIndex = 0;
+let currentTattooIndex = 0;
+const totalMaskCount = 8;
+const totalTattooCount = 9;
 
-async function loadTattooSettings() {
-  try {
-    const res = await fetch("tattoo-settings.json");
-    tattooPositions = await res.json();
-  } catch {
-    tattooPositions = {};
+let tattooSettings = {};
+
+fetch("tattoo-settings.json")
+  .then(res => res.json())
+  .then(data => {
+    tattooSettings = data;
+    applyTattooPosition(currentTattooIndex + 1);
+  });
+
+function change(type, dir) {
+  if (type === "mask") {
+    currentMaskIndex = (currentMaskIndex + dir + totalMaskCount) % totalMaskCount;
+    document.getElementById("baseMask").src = `mask/${currentMaskIndex + 1}.png`;
+  } else if (type === "tattoo") {
+    currentTattooIndex = (currentTattooIndex + dir + totalTattooCount) % totalTattooCount;
+    document.getElementById("tattoo").src = `tattoo/${currentTattooIndex + 1}.png`;
+    applyTattooPosition(currentTattooIndex + 1);
   }
 }
 
-function change(type, delta) {
-  current[type] += delta;
-  const max = total[type];
-  if (current[type] > max) current[type] = 1;
-  if (current[type] < 1) current[type] = max;
+function applyTattooPosition(index) {
+  const tattoo = document.getElementById("tattoo");
+  const settings = tattooSettings[index];
 
-  const el = document.getElementById(type === "mask" ? "baseMask" : "tattoo");
-  el.src = `${type}/${current[type]}.png`;
+  if (!tattoo || !settings) {
+    console.warn("Нет настроек для татуировки", index);
+    return;
+  }
 
-  if (type === "tattoo") applyTattooSettings();
+  tattoo.style.position = "absolute";
+  tattoo.style.left = settings.left + "px";
+  tattoo.style.top = settings.top + "px";
+  tattoo.style.transform = `scale(${settings.scale})`;
+  tattoo.style.filter = `hue-rotate(${settings.color}deg)`;
 }
-
-function applyTattooSettings() {
-  const id = current.tattoo;
-  const el = document.getElementById("tattoo");
-  const set = tattooPositions[id];
-  if (!el || !set) return;
-
-  el.style.position = "absolute";
-  el.style.left = (set.x || 0) + "px";
-  el.style.top = (set.y || 0) + "px";
-  el.style.width = (set.size || 100) + "%";
-  el.style.filter = set.color ? `hue-rotate(${set.color}deg)` : "none";
-}
-
-window.onload = async () => {
-  await loadTattooSettings();
-  applyTattooSettings();
-};
