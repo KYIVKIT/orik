@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Маски ORIK</title>
+  <title>Маски</title>
   <style>
     body {
-      margin: 0;
       background-color: #000;
+      margin: 0;
+      padding: 0;
       font-family: sans-serif;
       color: white;
       display: flex;
@@ -14,110 +15,56 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
-      overflow: hidden;
     }
-
-    #container {
-      width: 90vw;
-      height: 90vh;
-      background: black;
-      border: 2px solid #555;
+    .container {
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 90vw;
+      height: 70vh;
+      background-color: #111;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #0ff8;
     }
-
     canvas {
       position: absolute;
       top: 0;
       left: 0;
+      z-index: 0;
     }
-
-    #mask {
-      position: relative;
-      z-index: 10;
-      max-width: 50%;
-      transition: transform 0.5s ease;
+    .mask-frame {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
     }
-
-    #mask:hover {
-      transform: translateY(-10px);
+    .mask-frame img {
+      width: 50%;
+      height: auto;
+      transition: transform 0.5s ease-in-out;
     }
-
-    .slider {
-      width: 300px;
+    .mask-frame img:hover {
+      transform: translateY(-10px) rotate(1deg);
+    }
+    input[type="range"] {
+      width: 80%;
       margin-top: 20px;
-      -webkit-appearance: none;
-      height: 10px;
-      background: linear-gradient(to right, red, orange, yellow, green, cyan, blue, violet);
-      outline: none;
-      border-radius: 5px;
-    }
-
-    .slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 25px;
-      height: 25px;
-      background: #fff;
-      cursor: pointer;
-      border-radius: 50%;
-      border: 2px solid #000;
+      accent-color: #0ff;
     }
   </style>
 </head>
 <body>
-  <h2>Маска</h2>
-  <div id="container">
-    <canvas id="bg"></canvas>
-    <img id="mask" src="mask/1.png" alt="mask">
+  <h1>Маска</h1>
+  <div class="container">
+    <canvas id="background"></canvas>
+    <div class="mask-frame">
+      <img id="mask" src="mask/1.png" alt="Маска" />
+    </div>
   </div>
-  <input type="range" min="1" max="8" value="1" class="slider" id="maskSlider">
+  <input type="range" min="1" max="8" value="1" id="slider" />
 
-  <script>
-    const maskEl = document.getElementById("mask");
-    const slider = document.getElementById("maskSlider");
-
-    slider.addEventListener("input", () => {
-      const val = slider.value;
-      maskEl.src = `mask/${val}.png`;
-    });
-
-    // Canvas эффект живого фона
-    const canvas = document.getElementById('bg');
-    const ctx = canvas.getContext('2d');
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-
-    let particles = [];
-    for (let i = 0; i < 100; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 2 + 1,
-        dx: (Math.random() - 0.5) * 1,
-        dy: (Math.random() - 0.5) * 1
-      });
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#444";
-      particles.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fill();
-        p.x += p.dx;
-        p.y += p.dy;
-
-        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-      });
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
